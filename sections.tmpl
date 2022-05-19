@@ -1,0 +1,63 @@
+{{- if .Config.Sections.Header -}}
+	{{- with .Module.Header -}}
+		{{ . }}
+		{{ printf "\n" }}
+	{{- end -}}
+{{ end -}}
+
+{{- if .Config.Sections.Inputs -}}
+	{{ indent 0 "#" }} Inputs
+	{{ if not .Module.Inputs }}
+		No inputs.
+	{{ else }}
+		{{- range .Module.Inputs }}
+		{{ printf "\n" }}
+		{{ indent 1 "#" }} {{ name .Name }} ` + "`" + `{{ .Type }}` + "`" + `
+
+		Description: {{ .Description }}
+		Default: {{ .GetValue }}
+		{{- end }}
+	{{ end }}
+{{ end -}}
+
+{{- if .Config.Sections.Outputs -}}
+	{{ indent 0 "#" }} Outputs
+	{{ if not .Module.Outputs }}
+		No outputs.
+	{{ else }}
+		| Name | Description | Type | Default |
+		|------|-------------|------|---------|
+		{{- range .Module.Outputs }}
+			- {{ .Name }}
+			- {{ .Description }}
+		{{- end }}
+	{{ end }}
+{{ end -}}
+
+{{- if .Config.Sections.Requirements -}}
+{{ indent 0 "#" }} Requirements
+
+Intentionally don't show requirements to demonstrate the flexibility of the plugin.
+{{ end -}}
+
+{{- if .Config.Sections.Providers -}}
+	{{ indent 0 "#" }} Providers
+	{{ if not .Module.Providers }}
+		No providers.
+	{{ else }}
+		{{- range .Module.Providers }}
+			- {{ .Name }}
+		{{- end }}
+	{{- end }}
+{{ end -}}
+
+{{- if .Config.Sections.Resources -}}
+{{ indent 0 "#" }} Resources
+	{{ if not .Module.Resources }}
+		No resources.
+	{{ else }}
+		{{- range .Module.Resources }}
+			- {{ .ProviderName }}
+		{{- end }}
+	{{- end }}
+{{ end -}}
